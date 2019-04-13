@@ -1,7 +1,7 @@
 let car;
 
 function setup() {
-  let canvas = createCanvas(600,600, WEBGL);
+  let canvas = createCanvas(800,600, WEBGL);
   canvas.parent('sketch-holder');
   car = new Car();
 

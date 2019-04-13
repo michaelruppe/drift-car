@@ -1,28 +1,36 @@
 class Car {
   constructor() {
-    this.d = createVector(width/2, height/2);
-    this.v = createVector(0,0);
-    this.a = createVector(0,0);
-    this.damping = createVector(0, 0);
-    this.angle = 0;
-    this.turnRateStatic = 0.1;
-    this.turnRateDynamic = 0.8 * this.turnRateStatic;
-    this.turnRate = this.turnRateStatic;
-    this.f = 1;
-    this.m = 5;
 
-    this.w = 18;
-    this.l = 30
+    // Turning parameters. Tune these as you see fit.
+    this.turnRateStatic = 0.1;            // The normal turning-rate (static friction => not sliding)
+    this.turnRateDynamic = 0.08;          // The turning-rate when drifting
+    this.turnRate = this.turnRateStatic;  // initialise turn-rate
+    this.gripStatic = 2;                  // sliding friction while gripping
+    this.gripDynamic = 0.5;               // sliding friction while drifting
+    this.DRIFT_CONSTANT = 2;              // sets the x-velocity threshold for no-drift <=> drift. Lower = drift sooner
 
-    this.DRIFT_CONSTANT = 2;
+    // Physical properties
+    this.d = createVector(width/2, height/2);   // displacement (position)
+    this.v = createVector(0,0);                 // velocity (world-referenced)
+    this.a = createVector(0,0);                 // acceleration (world-referenced)
+    this.angle = 0;                             // heading - the direction the car faces
+    this.m = 10;                                // mass
+    this.w = 18;                                // width of body (for animation)
+    this.l = 30;                                // length of body (for animation)
+    this.f = 0.2;                               // Acceleration / braking force
+
+    // Car color changes for drift state
+    this.col = color(255,255,255);
 
   }
 
   show() {
     rectMode(CENTER);
+    // Centre on the car, rotate
     push(); translate(this.d.x, this.d.y); rotate(this.angle);
+    fill(this.col);
     rect(0,0, this.w, this.l);
-    rect(0, this.l/2, 2,2)
+    rect(0, this.l/2, 2,2);
     pop();
   }
 
@@ -31,13 +39,13 @@ class Car {
     if (keyIsPressed) {
       // ACCELERATING (BODY-FIXED to WORLD)
       if (keyIsDown(UP_ARROW)) {
-        let bodyAcc = createVector(0,0.2);
+        let bodyAcc = createVector(0, this.f);
         let worldAcc = this.vectBodyToWorld(bodyAcc, this.angle);
         this.a.add(worldAcc);
       }
       // BRAKING (BODY-FIXED TO WORLD)
       if (keyIsDown(DOWN_ARROW)) {
-        let bodyAcc = createVector(0,-0.2);
+        let bodyAcc = createVector(0,-this.f);
         let worldAcc = this.vectBodyToWorld(bodyAcc, this.angle);
         this.a.add(worldAcc);
       }
@@ -52,34 +60,40 @@ class Car {
 
 
     // Car steering and drifting physics
+
+    // Rotate the global velocity vector into a body fixed one. x = sideways velocity, y = forward/backwards
     let bodyFixedVelocity = this.vectWorldToBody(this.v, this.angle);
 
     let bodyFixedDrag;
     if ( abs(bodyFixedVelocity.x) < this.DRIFT_CONSTANT ) {
       // Gripping
-      bodyFixedDrag = createVector(bodyFixedVelocity.x * -2, bodyFixedVelocity.y * 0.05);
+      bodyFixedDrag = createVector(bodyFixedVelocity.x * -this.gripStatic, bodyFixedVelocity.y * 0.05);
       this.turnRate = this.turnRateStatic;
+      this.col = color(255,255,255); // show drift state as car color
     } else {
       // Drifting
-      bodyFixedDrag = createVector(bodyFixedVelocity.x * -0.5, bodyFixedVelocity.y * 0.05);
+      bodyFixedDrag = createVector(bodyFixedVelocity.x * -this.gripDynamic, bodyFixedVelocity.y * 0.05);
       this.turnRate = this.turnRateDynamic;
+      this.col = color(255,100,100); // show drift state as car color
     }
 
-
-
-
+    // Rotate body fixed forces into world fixed and add to acceleration
     let worldFixedDrag = this.vectBodyToWorld(bodyFixedDrag, this.angle)
     this.a.add(worldFixedDrag.div(this.m)); // Include inertia
 
     // Physics Engine
-    this.angle = this.angle % TWO_PI; // Clamp angle to one revolution
+    this.angle = this.angle % TWO_PI; // Restrict angle to one revolution
     this.v.add(this.a);
-
     this.d.add(this.v);
-    this.a = createVector(0,0);
-    this.damping = createVector(0,0);
+    this.a = createVector(0,0); // Reset acceleration for next frame
+
   }
 
+
+/*******************************************************************************
+ * Rotation Matrices
+ *   Rotate a vector from one frame of reference to the other.
+ ******************************************************************************/
 
   // Body to world rotation
   vectBodyToWorld(vect, ang) {
@@ -91,7 +105,7 @@ class Car {
     return vn;
   }
 
-  // Body to world rotation
+  // World to body rotation
   vectWorldToBody(vect, ang) {
     let v = vect.copy();
     let vn = createVector(
@@ -100,6 +114,5 @@ class Car {
     );
     return vn;
   }
-
 
 }

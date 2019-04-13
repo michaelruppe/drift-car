@@ -1,2 +1,6 @@
 # Drift Car
-an experiment to create a p5 class for a car that drifts somewhat convincingly
+
+A car class with somewhat realistic-looking drift.
+Switches lateral friction from static to dynamic depending on body-fixed velocity.
+
+Car isn't non-holonomic - it can still spin on the spot. If you fix this issue a pull request!
