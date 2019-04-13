@@ -14,7 +14,7 @@ class Car {
     this.w = 18;
     this.l = 30
 
-    this.DRIFT_CONSTANT = 1.5;
+    this.DRIFT_CONSTANT = 2;
 
   }
 
