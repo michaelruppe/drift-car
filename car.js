@@ -17,7 +17,7 @@ class Car {
     this.m = 10;                                // mass
     this.w = 18;                                // width of body (for animation)
     this.l = 30;                                // length of body (for animation)
-    this.f = 0.2;                               // Acceleration / braking force
+    this.f = 0.15;                               // Acceleration / braking force
     this.isDrifting = false;                    // Drift state
     // Car color changes for drift state
     this.col = color(255,255,255);
@@ -77,17 +77,19 @@ class Car {
     let vB = this.vectWorldToBody(this.v, this.angle);
 
     let bodyFixedDrag;
+    let grip;
     if ( abs(vB.x) < this.DRIFT_CONSTANT ) {
       // Gripping
-      bodyFixedDrag = createVector(vB.x * -this.gripStatic, vB.y * 0.05);
+      grip = this.gripStatic
       this.turnRate = this.turnRateStatic;
       this.isDrifting = false;
     } else {
       // Drifting
-      bodyFixedDrag = createVector(vB.x * -this.gripDynamic, vB.y * 0.05);
+      grip = this.gripDynamic;
       this.turnRate = this.turnRateDynamic;
       this.isDrifting = true;
     }
+    bodyFixedDrag = createVector(vB.x * -this.gripDynamic, vB.y * 0.05);
 
     // Rotate body fixed forces into world fixed and add to acceleration
     let worldFixedDrag = this.vectBodyToWorld(bodyFixedDrag, this.angle)
