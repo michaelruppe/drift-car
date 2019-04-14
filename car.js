@@ -1,5 +1,5 @@
 class Car {
-  constructor() {
+  constructor(x = width/2, y = height/2, angle = 0) {
 
     // Turning parameters. Tune these as you see fit.
     this.turnRateStatic = 0.1;            // The normal turning-rate (static friction => not sliding)
@@ -10,10 +10,10 @@ class Car {
     this.DRIFT_CONSTANT = 2;              // sets the x-velocity threshold for no-drift <=> drift. Lower = drift sooner
 
     // Physical properties
-    this.d = createVector(width/2, height/2);   // displacement (position)
+    this.d = createVector(x, y);   // displacement (position)
     this.v = createVector(0,0);                 // velocity (world-referenced)
     this.a = createVector(0,0);                 // acceleration (world-referenced)
-    this.angle = 0;                             // heading - the direction the car faces
+    this.angle = angle;                             // heading - the direction the car faces
     this.m = 10;                                // mass
     this.w = 18;                                // width of body (for animation)
     this.l = 30;                                // length of body (for animation)

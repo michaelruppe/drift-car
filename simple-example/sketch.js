@@ -6,7 +6,7 @@ function setup() {
   createCanvas(600,600);
   frameRate(60);
 
-  car = new Car();
+  car = new Car(width/2, 20, 0);
 }
 
 function draw() {
