@@ -17,6 +17,15 @@ function draw() {
   background(127);
 
   car.update();
+
+  // Change car colour when drifting
+  let nowDrifting = car.isDrift()
+  if(nowDrifting) {
+    car.col = color(255,100,100);
+  } else {
+    car.col = color(255, 255, 255);
+  }
+
   car.show();
 
   // Save the current location, AND drift state as an object
@@ -24,7 +33,7 @@ function draw() {
   // the trail.
   trail.push({
     position: car.getPos(),  // A vector(x,y)
-    drifting: car.isDrift(), // true / false
+    drifting: nowDrifting, // true / false
   });
 
   // Delete the oldest car position if the trail is long enough.

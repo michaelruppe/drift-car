@@ -81,13 +81,11 @@ class Car {
       // Gripping
       bodyFixedDrag = createVector(vB.x * -this.gripStatic, vB.y * 0.05);
       this.turnRate = this.turnRateStatic;
-      this.col = color(255,255,255); // show drift state as car color
       this.isDrifting = false;
     } else {
       // Drifting
       bodyFixedDrag = createVector(vB.x * -this.gripDynamic, vB.y * 0.05);
       this.turnRate = this.turnRateDynamic;
-      this.col = color(255,100,100); // show drift state as car color
       this.isDrifting = true;
     }
 
