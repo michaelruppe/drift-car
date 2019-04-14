@@ -1,6 +1,6 @@
 # Drift Car
 
-Try the car out for yourself! [Demo](https://raw.githubusercontent.com/michaelruppe/drift-car/example/index.html)
+Try the car out for yourself! [Demo](https://michaelruppe.github.io/drift-car/example/index.html)
 
 A car class with somewhat realistic-looking friction mechanics.
 Switches lateral friction from static to dynamic depending on body-fixed velocity.

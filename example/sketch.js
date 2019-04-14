@@ -1,3 +1,7 @@
+// Example use of the Car class. Leaves a colour-coded trail behind
+// the car to indicate when it was sliding.
+
+
 let car;
 let trail = []; // Leave a trail behind the car
 const TRAIL_LENGTH = 100;
@@ -40,7 +44,7 @@ function draw() {
   }
 
 
-  // Keep car onscreen
+  // Keep car onscreen. Car displacement (position) is stored in vector: car.d
   if(car.d.x > width){
     car.d.x = 0;
   } else if(car.d.x < 0) {

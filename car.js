@@ -73,19 +73,19 @@ class Car {
 
     // Car steering and drifting physics
 
-    // Rotate the global velocity vector into a body fixed one. x = sideways velocity, y = forward/backwards
-    let bodyFixedVelocity = this.vectWorldToBody(this.v, this.angle);
+    // Rotate the global velocity vector into a body-fixed one. x = sideways velocity, y = forward/backwards
+    let vB = this.vectWorldToBody(this.v, this.angle);
 
     let bodyFixedDrag;
-    if ( abs(bodyFixedVelocity.x) < this.DRIFT_CONSTANT ) {
+    if ( abs(vB.x) < this.DRIFT_CONSTANT ) {
       // Gripping
-      bodyFixedDrag = createVector(bodyFixedVelocity.x * -this.gripStatic, bodyFixedVelocity.y * 0.05);
+      bodyFixedDrag = createVector(vB.x * -this.gripStatic, vB.y * 0.05);
       this.turnRate = this.turnRateStatic;
       this.col = color(255,255,255); // show drift state as car color
       this.isDrifting = false;
     } else {
       // Drifting
-      bodyFixedDrag = createVector(bodyFixedVelocity.x * -this.gripDynamic, bodyFixedVelocity.y * 0.05);
+      bodyFixedDrag = createVector(vB.x * -this.gripDynamic, vB.y * 0.05);
       this.turnRate = this.turnRateDynamic;
       this.col = color(255,100,100); // show drift state as car color
       this.isDrifting = true;
