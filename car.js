@@ -25,6 +25,15 @@ class Car {
   }
 
 
+  /*******************************************************************************
+  *  Safely read car variables
+  ******************************************************************************/
+  getPos() {
+    return this.d.copy();
+  }
+  isDrift() {
+    return this.isDrifting;
+  }
 
 
   show() {
@@ -32,8 +41,8 @@ class Car {
     // Centre on the car, rotate
     push(); translate(this.d.x, this.d.y); rotate(this.angle);
     stroke(0); strokeWeight(1); fill(this.col);
-    rect(0,0, this.w, this.l);
-    rect(0, this.l/2, 2,2);
+    rect(0,0, this.w, this.l); // Car body
+    rect(0, this.l/2, 4,4);    // Indicate front side
     pop();
   }
 
@@ -120,17 +129,4 @@ class Car {
     return vn;
   }
 
-
-  /*******************************************************************************
-   * API
-   *  Safely read car variables
-   ******************************************************************************/
-
-  getPos() {
-    return this.d.copy();
-  }
-
-  isDrift() {
-    return this.isDrifting;
-  }
 }
