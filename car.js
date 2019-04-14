@@ -18,17 +18,20 @@ class Car {
     this.w = 18;                                // width of body (for animation)
     this.l = 30;                                // length of body (for animation)
     this.f = 0.2;                               // Acceleration / braking force
-
+    this.isDrifting = false;                    // Drift state
     // Car color changes for drift state
     this.col = color(255,255,255);
 
   }
 
+
+
+
   show() {
     rectMode(CENTER);
     // Centre on the car, rotate
     push(); translate(this.d.x, this.d.y); rotate(this.angle);
-    fill(this.col);
+    stroke(0); strokeWeight(1); fill(this.col);
     rect(0,0, this.w, this.l);
     rect(0, this.l/2, 2,2);
     pop();
@@ -70,11 +73,13 @@ class Car {
       bodyFixedDrag = createVector(bodyFixedVelocity.x * -this.gripStatic, bodyFixedVelocity.y * 0.05);
       this.turnRate = this.turnRateStatic;
       this.col = color(255,255,255); // show drift state as car color
+      this.isDrifting = false;
     } else {
       // Drifting
       bodyFixedDrag = createVector(bodyFixedVelocity.x * -this.gripDynamic, bodyFixedVelocity.y * 0.05);
       this.turnRate = this.turnRateDynamic;
       this.col = color(255,100,100); // show drift state as car color
+      this.isDrifting = true;
     }
 
     // Rotate body fixed forces into world fixed and add to acceleration
@@ -115,4 +120,17 @@ class Car {
     return vn;
   }
 
+
+  /*******************************************************************************
+   * API
+   *  Safely read car variables
+   ******************************************************************************/
+
+  getPos() {
+    return this.d.copy();
+  }
+
+  isDrift() {
+    return this.isDrifting;
+  }
 }
