@@ -1,10 +1,22 @@
 # Drift Car
 
-Try the car out for yourself! [Demo](https://michaelruppe.github.io/drift-car/example/index.html)
+Try the car out for yourself! Control the [demo](https://michaelruppe.github.io/drift-car/example/index.html) with arrow keys.
 
 A car class with somewhat realistic-looking friction mechanics.
-Switches lateral friction from static to dynamic depending on body-fixed velocity.
 
-This isn't _technically_ drifting: where the rear slip angle is less than the front, wheels pointed out-of-turn. I just needed to call it something.
 
-Car isn't non-holonomic - it can still spin on the spot. If you fix this, issue a pull request!
+Using the class is easy! Copy _car.js_ into your p5 project directory and create a car in your script:
+```javascript
+car = new Car(); // Initialises car in the middle of the canvas.
+// OR
+car = new Car(x, y, angle); // Initialises car with desired location, angle
+```
+you need to call the following once every loop through `draw()` .
+```javascript
+car.update(); // simulates the car
+car.show();   // renders the car
+```
+
+---
+
+This class is a slight improvement on using the classic slidey-spaceship as a car vehicle. It doesn't come close to an accurate representation of vehicle steering - for one thing, the car can turn in place! While it's possible to implement a [more accurate model](http://planning.cs.uiuc.edu/node695.html), you lose the fun of being able to directly control angle-rate by pressing arrow keys. More accurate models of vehicle dynamics use *steering angle* as an input for control. Since all we have are on/off keys on a keyboard, this wouldn't be much fun to control.
