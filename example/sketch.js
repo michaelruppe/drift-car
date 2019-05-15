@@ -7,7 +7,8 @@ let trail = []; // Leave a trail behind the car
 const TRAIL_LENGTH = 100;
 
 function setup() {
-  createCanvas(600,600);
+  let canvas = createCanvas(600,600);
+  canvas.parent('sketch-holder');
   frameRate(60);
 
   car = new Car(width/2, 20, 0);
