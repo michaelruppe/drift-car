@@ -10,16 +10,17 @@ class Car {
     this.DRIFT_CONSTANT = 3;              // sets the x-velocity threshold for no-drift <=> drift. Lower = drift sooner
 
     // Physical properties
-    this.d = createVector(x, y);   // displacement (position)
-    this.v = createVector(0,0);                 // velocity (world-referenced)
-    this.a = createVector(0,0);                 // acceleration (world-referenced)
-    this.angle = angle;                             // heading - the direction the car faces
-    this.m = 10;                                // mass
-    this.w = 18;                                // width of body (for animation)
-    this.l = 30;                                // length of body (for animation)
-    this.f = 0.15;                               // Acceleration / braking force
-    this.isDrifting = false;                    // Drift state
-    // Car color changes for drift state
+    this.d = createVector(x, y);          // displacement (position)
+    this.v = createVector(0,0);           // velocity (world-referenced)
+    this.a = createVector(0,0);           // acceleration (world-referenced)
+    this.angle = angle;                   // heading - the direction the car faces
+    this.m = 10;                          // mass
+    this.w = 18;                          // width of body (for animation)
+    this.l = 30;                          // length of body (for animation)
+    this.f = 0.15;                        // Acceleration / braking force
+    this.isDrifting = false;              // Drift state
+
+    // Colour variable - in an example the car colour changes when it loses traction
     this.col = color(255,255,255);
 
   }
