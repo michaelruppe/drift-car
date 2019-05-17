@@ -67,3 +67,12 @@ function draw() {
   }
 
 }
+
+
+// Prevent arrow-keys and spacebar from scrolling the page.
+window.addEventListener("keydown", (key) => {
+    // space and arrow keys
+    if([32, 37, 38, 39, 40].indexOf(key.keyCode) > -1) {
+        key.preventDefault();
+    }
+}, false);
